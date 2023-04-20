@@ -51,7 +51,7 @@ export async function getPlayer(
     return {
       username: user.username,
       banReason: user.ban?.reason,
-      banExpires: user.ban?.expires ? new Date(user.ban.expires) : undefined,
+      banExpires: user.ban?.expires ? new Date(user.ban.expires * 1000) : undefined,
       latestMatch: latestMatch ? new Date(latestMatch[0].inserted * 1000) : undefined,
       stats: {
         elo: user.elo,
