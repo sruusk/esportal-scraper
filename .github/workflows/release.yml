@@ -17,6 +17,8 @@ jobs:
         with:
           node-version: 'lts/*'
       - name: Install dependencies
+        env:
+          HERO_SKIP_CHROME_DOWNLOAD: true
         run: npm ci && npm run build
       - name: Release
         env:
