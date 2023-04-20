@@ -17,15 +17,15 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/apina-32/esportal-scraper.git"
+    "url": "https://github.com/sruusk/esportal-scraper.git"
   },
-  "homepage": "https://github.com/apina-32/esportal-scraper",
+  "homepage": "https://github.com/sruusk/esportal-scraper",
   "author": "Apina-32",
   "license": "MIT",
   "dependencies": {
-    "@ulixee/commons": "^2.0.0-alpha.18",
-    "@ulixee/hero": "^2.0.0-alpha.18",
-    "@ulixee/net": "^2.0.0-alpha.18",
+    "@ulixee/commons": "^2.0.0-alpha.19",
+    "@ulixee/hero": "^2.0.0-alpha.19",
+    "@ulixee/net": "^2.0.0-alpha.19",
     "chrono-node": "^2.6.3",
     "debug": "^4.3.4",
     "p-queue": "^6.6.2",
