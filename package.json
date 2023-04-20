@@ -1,7 +1,7 @@
 {
   "name": "esportal-scraper",
-  "version": "1.1.6",
-  "description": "Pull ESEA profile data",
+  "version": "1.0.0",
+  "description": "Pull Esportal profile data",
   "main": "dist/index.cjs.js",
   "typings": "dist/index.d.ts",
   "module": "dist/index.esm.js",

@@ -14,7 +14,7 @@ describe('The scraper class', () => {
     }
 
     const extendedScraper = new Extended();
-    const resp = await extendedScraper.getPlayer('2570455');
+    const resp = await extendedScraper.getPlayer('154457808');
     expect(resp).toBeDefined();
     await extendedScraper.shutdown();
   });
