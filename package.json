@@ -7,7 +7,6 @@
   "module": "dist/index.esm.js",
   "scripts": {
     "test": "jest --coverage",
-    "install": "npm run build",
     "build": "rimraf dist && rollup -c rollup.config.ts"
   },
   "keywords": [
