@@ -86,4 +86,10 @@ describe('The player scrapers', () => {
       country: expect.any(String)
     });
   });
+
+  it('should throw when player is not found', async () => {
+    await scraper.getPlayer('76561198107663925').catch((err) => {
+        expect(err).toBeInstanceOf(Error);
+    });
+  });
 });
