@@ -20,7 +20,7 @@
     "url": "https://github.com/sruusk/esportal-scraper.git"
   },
   "homepage": "https://github.com/sruusk/esportal-scraper",
-  "author": "Apina-32",
+  "author": "sruusk",
   "license": "MIT",
   "dependencies": {
     "@ulixee/commons": "^2.0.0-alpha.19",
@@ -75,7 +75,7 @@
   ],
   "release": {
     "branches": [
-      "master"
+      "main"
     ],
     "plugins": [
       "@semantic-release/commit-analyzer",
