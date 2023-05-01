@@ -20,6 +20,15 @@ Later, if you'd like to use a remote Hero Core, you can remove the `@ulixee/hero
 
 ### Example Usage
 
+- Typescript:  
+```js
+import { EsportalScraper } from 'esea-scraper';
+
+const esportal = new EsportalScraper();
+await esportal.getPlayer('76561199023463910');
+```
+
+- Javascript:  
 ```js
 const esportalScraper = require("esportal-scraper");
 const esportal = new esportalScraper.EsportalScraper;
