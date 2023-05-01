@@ -20,7 +20,7 @@
     "url": "git+ssh://git@github.com:sruusk/esportal-scraper.git"
   },
   "homepage": "https://github.com/sruusk/esportal-scraper",
-  "author": "sruusk",
+  "author": "Apina-32",
   "license": "MIT",
   "dependencies": {
     "@ulixee/commons": "^2.0.0-alpha.21",
