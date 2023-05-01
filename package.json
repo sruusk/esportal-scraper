@@ -72,5 +72,8 @@
   },
   "files": [
     "dist"
-  ]
+  ],
+  "release": {
+    "branches": ["main"]
+  }
 }
