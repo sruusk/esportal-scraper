@@ -36,10 +36,6 @@ export async function getPlayer(
     this.debug(`Going to ${origin}`);
     const originResponse = await hero.goto(origin, { timeoutMs: this.timeout });
     const statusCode = originResponse.response.statusCode;
-    if (statusCode !== 200) {
-      // noinspection ExceptionCaughtLocallyJS
-      throw new Error(`${origin} returned a non-200 response: ${statusCode}`);
-    }
 
     this.debug(`Fetching ${userUrl}`);
     const user = await fetch(hero, userUrl);
