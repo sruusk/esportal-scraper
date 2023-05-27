@@ -34,8 +34,7 @@ export async function getPlayer(
     let latestMatchUrl = `${origin}/api/user_profile/get_latest_matches?_=${Date.now()}&id=${steamID}&page=1&v=2`;
 
     this.debug(`Going to ${origin}`);
-    const originResponse = await hero.goto(origin, { timeoutMs: this.timeout });
-    const statusCode = originResponse.response.statusCode;
+    await hero.goto(origin, { timeoutMs: this.timeout });
 
     this.debug(`Fetching ${userUrl}`);
     const user = await fetch(hero, userUrl);
@@ -48,6 +47,7 @@ export async function getPlayer(
       username: user.username,
       banReason: user.ban?.reason,
       banExpires: user.ban?.expires ? new Date(user.ban.expires * 1000) : undefined,
+      banInserted: user.ban?.inserted ? new Date(user.ban.inserted * 1000) : undefined,
       latestMatch: latestMatch ? new Date(latestMatch[0].inserted * 1000) : undefined,
       stats: {
         elo: user.elo,

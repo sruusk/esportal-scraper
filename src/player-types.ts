@@ -14,6 +14,7 @@ export interface PlayerOutput {
   username: string;
   banReason: string | undefined;
   banExpires: Date | undefined;
+  banInserted: Date | undefined;
   latestMatch: Date | undefined;
   country: string | undefined;
   stats: PlayerStats;
