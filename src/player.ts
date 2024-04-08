@@ -1,7 +1,7 @@
 import Hero from '@ulixee/hero';
 import { PlayerOutput } from './player-types';
 import { EsportalScraper } from './index';
-import {esportalCountries} from "./constats";
+import { esportalCountries } from './constats';
 
 async function fetch(hero: Omit<Hero, 'then'>, url: string): Promise<any> {
   const fetchResponse = await hero.fetch(url);
@@ -27,17 +27,18 @@ export async function getPlayer(
 ): Promise<PlayerOutput> {
   const hero = await this.createHero();
   try {
-    if(matchSteamID64(steamID.toString())) steamID = steamID64toSteamID3(steamID.toString());
+    if (matchSteamID64(steamID.toString())) steamID = steamID64toSteamID3(steamID.toString());
 
-    let origin = 'https://esportal.com';
-    let userUrl = `${origin}/api/user_profile/get?_=${Date.now()}&id=${steamID}&bans=1`;
-    let latestMatchUrl = `${origin}/api/user_profile/get_latest_matches?_=${Date.now()}&id=${steamID}&page=1&v=2`;
+    const origin = 'https://esportal.com';
+    const userUrl = `${origin}/api/user_profile/get?_=${Date.now()}&id=${steamID}&bans=1`;
+    const latestMatchUrl = `${origin}/api/user_profile/get_latest_matches?_=${Date.now()}&id=${steamID}&page=1&v=2`;
 
     this.debug(`Going to ${origin}`);
     await hero.goto(origin, { timeoutMs: this.timeout });
 
     this.debug(`Fetching ${userUrl}`);
     const user = await fetch(hero, userUrl);
+    const stats = user.game_stats['2'];
 
     this.debug(`Fetching ${latestMatchUrl}`);
     const latestMatch = await fetch(hero, latestMatchUrl);
@@ -45,22 +46,23 @@ export async function getPlayer(
     await hero.close();
     return {
       username: user.username,
+      banned: !!user.banned,
       banReason: user.ban?.reason,
       banExpires: user.ban?.expires ? new Date(user.ban.expires * 1000) : undefined,
       banInserted: user.ban?.inserted ? new Date(user.ban.inserted * 1000) : undefined,
       latestMatch: latestMatch ? new Date(latestMatch[0].inserted * 1000) : undefined,
       stats: {
-        elo: user.elo,
-        matches: user.wins + user.losses,
-        wins: user.wins,
-        losses: user.losses,
-        winRate: Math.round((user.wins / (user.wins + user.losses)) * 100),
-        kd: parseFloat((user.kills / user.deaths).toFixed(2)),
-        hs: Math.round((user.headshots / user.kills) * 100),
+        elo: stats.elo,
+        rankLocked: stats.rank_locked,
+        matches: stats.wins + stats.losses,
+        wins: stats.wins,
+        losses: stats.losses,
+        winRate: Math.round((stats.wins / (stats.wins + stats.losses)) * 100),
+        kd: parseFloat((stats.kills / stats.deaths).toFixed(2)),
+        hs: Math.round((stats.headshots / stats.kills) * 100),
       },
       country: user.country_id ? esportalCountries[user.country_id.toString()] : undefined,
     };
-
   } catch (err) {
     await hero.close();
     throw err;

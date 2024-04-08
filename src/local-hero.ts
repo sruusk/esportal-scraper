@@ -1,11 +1,7 @@
-import DefaultHero, {
-  ConnectionToHeroCore,
-  IConnectionToCoreOptions,
-  IHeroCreateOptions,
-} from '@ulixee/hero';
-import TransportBridge from '@ulixee/net/lib/TransportBridge.js';
-import ShutdownHandler from '@ulixee/commons/lib/ShutdownHandler.js';
-import type Core from '@ulixee/hero-core';
+import DefaultHero, { ConnectionToHeroCore, IConnectionToCoreOptions, IHeroCreateOptions } from "@ulixee/hero";
+import TransportBridge from "@ulixee/net/lib/TransportBridge.js";
+import ShutdownHandler from "@ulixee/commons/lib/ShutdownHandler.js";
+import type Core from "@ulixee/hero-core";
 
 interface CreateConnectionResponse {
   connection: ConnectionToHeroCore;
@@ -13,9 +9,9 @@ interface CreateConnectionResponse {
 }
 
 async function createConnectionToCore(
-  options?: Omit<IConnectionToCoreOptions, 'host'>
+  options?: Omit<IConnectionToCoreOptions, "host">
 ): Promise<CreateConnectionResponse> {
-  const Core = (await import('@ulixee/hero-core')).default;
+  const Core = (await import("@ulixee/hero-core")).default;
   const bridge = new TransportBridge();
   Core.addConnection(bridge.transportToClient);
   const connection = new ConnectionToHeroCore(bridge.transportToCore, { ...options });
@@ -25,6 +21,10 @@ async function createConnectionToCore(
 
 export default class LocalHero extends DefaultHero {
   static Core?: typeof Core;
+
+  constructor(createOptions: IHeroCreateOptions = {}) {
+    super(createOptions);
+  }
 
   static async create(createOptions: IHeroCreateOptions = {}): Promise<LocalHero> {
     const localCreateOptions = createOptions;
@@ -38,9 +38,5 @@ export default class LocalHero extends DefaultHero {
     localCreateOptions.connectionToCore = createConnectionResp.connection;
     this.Core = createConnectionResp.Core;
     return new LocalHero(localCreateOptions);
-  }
-
-  constructor(createOptions: IHeroCreateOptions = {}) {
-    super(createOptions);
   }
 }

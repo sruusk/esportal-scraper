@@ -2,6 +2,7 @@
 
 export interface PlayerStats {
   elo: number;
+  rankLocked: boolean;
   matches: number;
   wins: number;
   losses: number;
@@ -12,6 +13,7 @@ export interface PlayerStats {
 
 export interface PlayerOutput {
   username: string;
+  banned: boolean;
   banReason: string | undefined;
   banExpires: Date | undefined;
   banInserted: Date | undefined;
