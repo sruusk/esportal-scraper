@@ -21,3 +21,8 @@ export interface PlayerOutput {
   country: string | undefined;
   stats: PlayerStats;
 }
+
+export interface MatchOutput {
+  team1: string[];
+  team2: string[];
+}

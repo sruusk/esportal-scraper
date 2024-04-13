@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any,no-await-in-loop,no-promise-executor-return */
 import Hero from '@ulixee/hero';
 import { PlayerOutput } from './player-types';
 import { EsportalScraper } from './index';
