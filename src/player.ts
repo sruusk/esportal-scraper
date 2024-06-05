@@ -58,9 +58,9 @@ export async function getPlayer(
         matches: stats.wins + stats.losses,
         wins: stats.wins,
         losses: stats.losses,
-        winRate: Math.round((stats.wins / (stats.wins + stats.losses)) * 100),
-        kd: parseFloat((stats.kills / stats.deaths).toFixed(2)),
-        hs: Math.round((stats.headshots / stats.kills) * 100),
+        winRate: stats.losses ?? Math.round((stats.wins / (stats.wins + stats.losses)) * 100),
+        kd: stats.deaths ?? parseFloat((stats.kills / stats.deaths).toFixed(2)),
+        hs: stats.kills ?? Math.round((stats.headshots / stats.kills) * 100),
       },
       country: user.country_id ? esportalCountries[user.country_id.toString()] : undefined,
     };
