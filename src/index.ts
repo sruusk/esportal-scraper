@@ -4,7 +4,7 @@ import PQueue from 'p-queue';
 import type Core from '@ulixee/hero-core';
 import { getPlayer } from './player';
 import LocalHero from './local-hero';
-import { getMatch } from './match';
+import { getMatch, getGather } from './match';
 
 export * from './player-types';
 
@@ -87,6 +87,10 @@ export class EsportalScraper {
 
   public getMatch(...args: Parameters<typeof getMatch>): ReturnType<typeof getMatch> {
     return this.queue.add(() => getMatch.bind(this)(...args));
+  }
+
+  public getGather(...args: Parameters<typeof getGather>): ReturnType<typeof getGather> {
+    return this.queue.add(() => getGather.bind(this)(...args));
   }
 
   protected async createHero(): Promise<Hero> {

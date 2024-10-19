@@ -17,8 +17,24 @@ async function fetch(hero: Omit<Hero, 'then'>, url: string): Promise<any> {
   return fetchResponse.json();
 }
 
-export async function getMatch(this: EsportalScraper, matchID: string): Promise<MatchOutput> {
-  const hero = await this.createHero();
+function getPlayersFromApiResponse(match: ApiResponse) {
+  const players = match.players.map((player: any) => {
+    return {
+      id: player.id,
+      team: player.team,
+    };
+  });
+  const team1 = players
+      .filter((player: any) => player.team === 1)
+      .map((player: any) => steamID3toSteamID64(`[U:1:${player.id}]`));
+  const team2 = players
+      .filter((player: any) => player.team === 2)
+      .map((player: any) => steamID3toSteamID64(`[U:1:${player.id}]`));
+  return {team1, team2};
+}
+
+export async function getMatch(this: EsportalScraper, matchID: string, hero: Hero|null = null): Promise<MatchOutput> {
+  hero ??= await this.createHero();
   try {
     const origin = 'https://esportal.com';
     const matchUrl = `${origin}/api/match/get?_=${Date.now()}&id=${matchID}`;
@@ -28,19 +44,7 @@ export async function getMatch(this: EsportalScraper, matchID: string): Promise<
 
     this.debug(`Fetching ${matchUrl}`);
     const match = await fetch(hero, matchUrl);
-
-    const players = match.players.map((player: any) => {
-      return {
-        id: player.id,
-        team: player.team,
-      };
-    });
-    const team1 = players
-      .filter((player: any) => player.team === 1)
-      .map((player: any) => steamID3toSteamID64(`[U:1:${player.id}]`));
-    const team2 = players
-      .filter((player: any) => player.team === 2)
-      .map((player: any) => steamID3toSteamID64(`[U:1:${player.id}]`));
+    const {team1, team2} = getPlayersFromApiResponse(match);
 
     await hero.close();
     return {
@@ -51,4 +55,30 @@ export async function getMatch(this: EsportalScraper, matchID: string): Promise<
     await hero.close();
     throw err;
   }
+}
+
+export async function getGather(this: EsportalScraper, gatherID: string): Promise<MatchOutput> {
+  const hero = await this.createHero();
+  try {
+    const origin = 'https://esportal.com';
+    const gatherUrl = `${origin}/api/gather/get?_=${Date.now()}&id=${gatherID}`;
+
+    this.debug(`Going to ${origin}`);
+    await hero.goto(origin, { timeoutMs: this.timeout });
+
+    this.debug(`Fetching ${gatherUrl}`);
+    const gather = await fetch(hero, gatherUrl);
+    const matchId: number = gather.match_id;
+    return await this.getMatch(matchId.toString(), hero);
+  } catch (err) {
+    await hero.close();
+    throw err;
+  }
+}
+
+interface ApiResponse {
+    players: {
+      id: number;
+      team: number;
+    }[]
 }

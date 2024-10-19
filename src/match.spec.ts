@@ -36,4 +36,21 @@ describe('The match scrapers', () => {
       expect(/^7656119\d{10}$/.test(id)).toBe(true);
     });
   });
+
+  it('should return all statistics for a gather', async () => {
+    const response = await scraper.getGather('1951607');
+    expect(response).toMatchObject({
+      team1: expect.any(Array),
+      team2: expect.any(Array),
+    });
+    expect(response.team1).toHaveLength(5);
+    expect(response.team2).toHaveLength(5);
+
+    response.team1.forEach((id) => {
+      expect(/^7656119\d{10}$/.test(id)).toBe(true);
+    });
+    response.team2.forEach((id) => {
+      expect(/^7656119\d{10}$/.test(id)).toBe(true);
+    });
+  });
 });
