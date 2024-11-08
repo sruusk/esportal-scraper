@@ -14,7 +14,7 @@ describe('The player scrapers', () => {
   });
 
   it('should return all statistics', async () => {
-    const response = await scraper.getPlayer('205240369');
+    const response = await scraper.getPlayer('147398197');
     expect(response).toMatchObject({
       username: expect.any(String),
       latestMatch: expect.any(Date),
@@ -33,6 +33,10 @@ describe('The player scrapers', () => {
       },
       country: 'FI',
     });
+    expect(response.stats.kd).toBeGreaterThanOrEqual(0);
+    expect(response.stats.kd).toBeLessThanOrEqual(10);
+    expect(response.stats.hs).toBeGreaterThanOrEqual(0);
+    expect(response.stats.hs).toBeLessThanOrEqual(100);
   });
 
   it('should return banned player', async () => {
